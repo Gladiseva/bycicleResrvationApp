@@ -9,6 +9,8 @@ public interface BicycleReservationDAO {
 
     BicycleReservation getById(Long id);
 
+    List<BicycleReservation> getByEmployeeId(Long id);
+
     BicycleReservation create(BicycleReservation bicycleReservation);
 
     BicycleReservation update(BicycleReservation bicycleReservation);

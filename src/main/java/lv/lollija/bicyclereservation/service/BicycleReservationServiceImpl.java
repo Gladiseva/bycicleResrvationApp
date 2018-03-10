@@ -1,6 +1,5 @@
 package lv.lollija.bicyclereservation.service;
 
-import lv.lollija.bicyclereservation.dao.BicycleDAO;
 import lv.lollija.bicyclereservation.dao.BicycleReservationDAO;
 import lv.lollija.bicyclereservation.domain.BicycleReservation;
 
@@ -19,6 +18,11 @@ public class BicycleReservationServiceImpl implements BicycleReservationService 
     @Override
     public BicycleReservation getById(Long id) {
         return bicycleReservationDAO.getById(id);
+    }
+
+    @Override
+    public List<BicycleReservation> getByEmployeeId(Long id) {
+        return bicycleReservationDAO.getByEmployeeId(id);
     }
 
     @Override

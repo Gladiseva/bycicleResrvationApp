@@ -5,6 +5,7 @@ import lv.lollija.bicyclereservation.domain.BicycleReservation;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import java.util.List;
 
 public class BicycleReservationDAOImpl implements BicycleReservationDAO {
@@ -18,6 +19,14 @@ public class BicycleReservationDAOImpl implements BicycleReservationDAO {
     public BicycleReservation getById(Long id) {
         return entityManager.find(BicycleReservation.class, id);
     }
+
+    @Override
+    public List<BicycleReservation> getByEmployeeId(Long id) {
+        TypedQuery<BicycleReservation> query = entityManager.createQuery("from BicycleReservation br where br.employee.id = :id", BicycleReservation.class);
+        query.setParameter("id", id);
+        return query.getResultList();
+    }
+
 
     @Override
     public BicycleReservation create(BicycleReservation bicycleReservation) {

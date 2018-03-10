@@ -41,6 +41,15 @@ public class BicycleReservationController {
         return new BicycleReservationExtendedDTO(bicycleReservation);
     }
 
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/employees/{employeeId}")
+    public List<BicycleReservationExtendedDTO> getByEmployeeId(@PathParam("employeeId") Long employeeId) {
+        return bicycleReservationService.getByEmployeeId(employeeId).stream()
+                .map(BicycleReservationExtendedDTO::new)
+                .collect(Collectors.toList());
+    }
+
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
