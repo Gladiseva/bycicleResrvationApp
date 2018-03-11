@@ -3,6 +3,8 @@ package lv.lollija.bicyclereservation.presentation;
 
 import lv.lollija.bicyclereservation.domain.Bicycle;
 import lv.lollija.bicyclereservation.presentation.dto.BicycleDTO;
+import lv.lollija.bicyclereservation.presentation.dto.ExtendedBicycleDTO;
+import lv.lollija.bicyclereservation.presentation.dto.ScheduleRequestDTO;
 import lv.lollija.bicyclereservation.service.BicycleService;
 
 import javax.inject.Inject;
@@ -20,6 +22,25 @@ public class BicycleController {
     @Produces(MediaType.APPLICATION_JSON)
     public List<BicycleDTO> getAll() {
         return bicycleService.getAll().stream()
+                .map(BicycleDTO::new)
+                .collect(Collectors.toList());
+    }
+
+    @POST
+    @Path("/reservations/date")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public List<ExtendedBicycleDTO> getAllByDate(ScheduleRequestDTO scheduleRequestDTO) {
+        return bicycleService.getAllWithReservationsInPeriod(scheduleRequestDTO.getDateFrom(),
+                scheduleRequestDTO.getDateTo());
+    }
+
+    @POST
+    @Path("/date")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public List<BicycleDTO> getAllAvailableByDate(ScheduleRequestDTO scheduleRequestDTO) {
+        return bicycleService.getAllAvailableInPeriod(scheduleRequestDTO.getDateFrom(), scheduleRequestDTO.getDateTo()).stream()
                 .map(BicycleDTO::new)
                 .collect(Collectors.toList());
     }

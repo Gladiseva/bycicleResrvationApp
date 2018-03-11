@@ -1,15 +1,16 @@
 package lv.lollija.bicyclereservation.dao;
 
-import lv.lollija.bicyclereservation.domain.Bicycle;
 import lv.lollija.bicyclereservation.domain.BicycleReservation;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class BicycleReservationDAOImpl implements BicycleReservationDAO {
     private final EntityManager entityManager = HibernateUtil.getEntityManagerFactory().createEntityManager();
+
     @Override
     public List<BicycleReservation> getAll() {
         return entityManager.createQuery("from BicycleReservation ", BicycleReservation.class).getResultList();
@@ -53,5 +54,15 @@ public class BicycleReservationDAOImpl implements BicycleReservationDAO {
         query.setParameter("id", id);
         query.executeUpdate();
         entityManager.getTransaction().commit();
+    }
+
+    @Override
+    public List<BicycleReservation> getInPeriod(LocalDateTime dateFrom, LocalDateTime dateTo) {
+        TypedQuery<BicycleReservation> query = entityManager.createQuery("from BicycleReservation br where " +
+                ":dateFrom between br.startUsageDate and br.endUsageDate " +
+                "or br.startUsageDate between :dateFrom and :dateTo ", BicycleReservation.class);
+        query.setParameter("dateFrom", dateFrom);
+        query.setParameter("dateTo", dateTo);
+        return query.getResultList();
     }
 }

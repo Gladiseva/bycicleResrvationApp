@@ -4,6 +4,7 @@ import lv.lollija.bicyclereservation.dao.BicycleReservationDAO;
 import lv.lollija.bicyclereservation.domain.BicycleReservation;
 
 import javax.inject.Inject;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class BicycleReservationServiceImpl implements BicycleReservationService {
@@ -38,5 +39,10 @@ public class BicycleReservationServiceImpl implements BicycleReservationService 
     @Override
     public void delete(Long id) {
         bicycleReservationDAO.delete(id);
+    }
+
+    @Override
+    public List<BicycleReservation> getInPeriod(LocalDateTime dateFrom, LocalDateTime dateTo) {
+        return bicycleReservationDAO.getInPeriod(dateFrom, dateTo);
     }
 }
