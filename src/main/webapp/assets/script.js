@@ -3,59 +3,26 @@ $(document).ready(function () {
 });
 
 function showEmployees() {
-    $(".bicycles").hide();
-    $(".reservations").hide();
-    $(".employees").show();
+    $("#bicycles").hide();
+    $("#reservations").hide();
+    $("#employees").show();
+    $(".nav-item").removeClass("active");
+    $("#employee-menu-item").addClass("active");
     loadEmployees();
 }
 
 function showBicycles() {
-    $(".reservations").hide();
-    $(".employees").hide();
-    $(".bicycles").show();
+    $("#reservations").hide();
+    $("#employees").hide();
+    $("#bicycles").show();
+    $(".nav-item").removeClass("active");
+    $("#bicycle-menu-item").addClass("active");
 }
 
 function showReservations() {
-    $(".bicycles").hide();
-    $(".employees").hide();
-    $(".reservations").show();
-}
-
-function loadEmployees() {
-    $("#table-body").empty();
-    $.get("/api/v1/employees", function (employees) {
-        $.each(employees, function (index, employee) {
-            var row = document.createElement('tr');
-
-            var idColumn = document.createElement('td');
-            idColumn.innerHTML = employee.id;
-
-            var nameColumn = document.createElement('td');
-            nameColumn.innerHTML = employee.name;
-
-            var surnameColumn = document.createElement('td');
-            surnameColumn.innerHTML = employee.surname;
-
-            var optionsColumn = document.createElement('td');
-
-            var editButton = document.createElement('button');
-            var editIcon = document.createElement('span');
-            editIcon.className = "oi oi-pencil";
-            editButton.appendChild(editIcon);
-            editButton.type = "button";
-            editButton.className = "btn btn-light custom-button";
-            optionsColumn.appendChild(editButton);
-
-            var deleteButton = document.createElement('button');
-            var deleteIcon = document.createElement('span');
-            deleteIcon.className = "oi oi-trash";
-            deleteButton.appendChild(deleteIcon);
-            deleteButton.type = "button";
-            deleteButton.className = "btn btn-light custom-button";
-            optionsColumn.appendChild(deleteButton);
-
-            row.append(idColumn, nameColumn, surnameColumn, optionsColumn);
-            $("#table-body").append(row);
-        });
-    })
+    $("#bicycles").hide();
+    $("#employees").hide();
+    $("#reservations").show();
+    $(".nav-item").removeClass("active");
+    $("#reservation-menu-item").addClass("active");
 }
