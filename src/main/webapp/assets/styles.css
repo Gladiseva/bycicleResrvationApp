@@ -5,3 +5,15 @@
 #employees, #bicycles, #reservations {
     display: none;
 }
+.borders div{
+    border-top-style: groove;
+}
+.borders div > div{
+    border:0;
+}
+ #btn{
+     padding-top: 31px;
+ }
+ #date-selection-part{
+     background: ghostwhite;
+ }

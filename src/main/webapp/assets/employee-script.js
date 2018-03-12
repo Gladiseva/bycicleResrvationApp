@@ -37,6 +37,17 @@ function loadEmployees() {
             deleteButton.className = "btn btn-light custom-button";
             optionsColumn.appendChild(deleteButton);
 
+            var reservationButton = document.createElement('button');
+            reservationButton.addEventListener("click", function () {
+                makeReservation(employee);
+            });
+            var reservationIcon = document.createElement('i');
+            reservationIcon.className = "fas fa-bicycle";
+            reservationButton.appendChild(reservationIcon);
+            reservationButton.type = "button";
+            reservationButton.className = "btn btn-light custom-button";
+            optionsColumn.appendChild(reservationButton);
+
             row.append(idColumn, nameColumn, surnameColumn, optionsColumn);
             $("#table-body").append(row);
         });
@@ -64,6 +75,76 @@ function editEmployee(employee) {
     $("#form-group-name-input").val(employee.name);
     $("#form-group-surname-input").val(employee.surname);
     $("#user-modal").modal('show');
+}
+
+function makeReservation(employee) {
+    getReservationsByEmployeeId(employee, function (reservations) {
+        $('#made-reservations').empty();
+        for (var i = 0; i < reservations.length; i++) {
+            var optionInSelect = document.createElement('option');
+            optionInSelect.value = reservations[i];
+            optionInSelect.text = "" + reservations[i].startUsageDate + " " + reservations[i].endUsageDate;
+            $('#made-reservations').append(optionInSelect);
+        }
+        $("#make-reservation-modal").modal('show');
+        $("#reservation-employee-id").val(employee.id);
+        initializeDateRangePicker();
+    });
+}
+
+function initializeDateRangePicker() {
+    $('#bicycle-reservation-period').daterangepicker(
+        {
+            locale: {
+                format: 'MM.DD.YYYY HH:mm'
+            },
+            timePicker: true,
+            timePicker24Hour: true,
+            timePickerIncrement: 30,
+            minDate: getFormattedCurrentDate()
+        },
+        function(start, end, label) {
+            var dateFrom = start.format('YYYY-MM-DDTHH:mm:ss.SSS') + 'Z';
+            var dateTo = end.format('YYYY-MM-DDTHH:mm:ss.SSS') + 'Z';
+            var request = {
+                dateFrom: dateFrom,
+                dateTo: dateTo
+            };
+            $("#reservation-date-from").val(dateFrom);
+            $("#reservation-date-to").val(dateTo);
+
+            $.ajax({
+                url: '/api/v1/bicycles/date',
+                type: 'POST',
+                contentType: "application/json; charset=utf-8",
+                dataType: 'json',
+                data: JSON.stringify(request)
+            }).done(function (bicycles) {
+                $('#available-bicycles').empty();
+                $.each(bicycles, function(index, bicycle) {
+                    var optionInSelect = document.createElement('option');
+                    optionInSelect.value = bicycle.id;
+                    optionInSelect.text = bicycle.model + " " + bicycle.manufacturer + " (" + bicycle.yearProduced + ")";
+                    $('#available-bicycles').append(optionInSelect);
+                });
+            });
+        });
+}
+
+function getFormattedCurrentDate() {
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth()+1; //January is 0!
+    var hh = today.getHours();
+
+    var yyyy = today.getFullYear();
+    if(dd<10){
+        dd='0'+dd;
+    }
+    if(mm<10){
+        mm='0'+mm;
+    }
+    return dd+'.'+mm+'.'+yyyy+' '+hh+':00';
 }
 
 function updateEmployee(id) {
@@ -111,3 +192,25 @@ function createEmployee() {
 
     });
 }
+
+function reserve() {
+    var reservation = {
+        employeeId: $("#reservation-employee-id").val(),
+        bicycleId: $("#available-bicycles").val(),
+        startUsageDate: $("#reservation-date-from").val(),
+        endUsageDate: $("#reservation-date-to").val()
+    };
+
+    $.ajax({
+        url: '/api/v1/reservations/',
+        type: 'POST',
+        contentType: "application/json; charset=utf-8",
+        dataType: 'json',
+        data: JSON.stringify(reservation)
+    }).done(function () {
+        $("#make-reservation-modal").modal('hide');
+    });
+}
+
+
+

@@ -17,6 +17,7 @@ function showBicycles() {
     $("#bicycles").show();
     $(".nav-item").removeClass("active");
     $("#bicycle-menu-item").addClass("active");
+    loadBicycles();
 }
 
 function showReservations() {

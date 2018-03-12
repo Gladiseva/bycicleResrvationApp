@@ -58,6 +58,8 @@ public class BicycleReservationDAOImpl implements BicycleReservationDAO {
 
     @Override
     public List<BicycleReservation> getInPeriod(LocalDateTime dateFrom, LocalDateTime dateTo) {
+        dateFrom = dateFrom.plusSeconds(1);
+        dateTo = dateTo.minusSeconds(1);
         TypedQuery<BicycleReservation> query = entityManager.createQuery("from BicycleReservation br where " +
                 ":dateFrom between br.startUsageDate and br.endUsageDate " +
                 "or br.startUsageDate between :dateFrom and :dateTo ", BicycleReservation.class);

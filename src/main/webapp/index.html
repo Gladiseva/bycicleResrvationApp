@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css"/>
     <link rel="stylesheet" href="assets/styles.css">
 </head>
 <body>
@@ -34,8 +35,8 @@
     <div class="row" id="employees">
         <div class="col">
             <div class="row">
-                <div class="col-md-1 offset-md-8">
-                    <button type="button" class="btn btn-light" onclick="addEmployee()">
+                <div class="col">
+                    <button type="button" class="btn btn-light float-md-right" onclick="addEmployee()">
                         <span class="oi oi-plus"></span>
                     </button>
                 </div>
@@ -59,50 +60,190 @@
     </div>
     <div class="row" id="bicycles">
         <div class="col">
-            <h1>Should be bicycles</h1>
-        </div>
-    </div>
-    <div class="row" id="reservations">
-        <div class="col">
-            <h1>Should be reservations</h1>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="user-modal" tabindex="-1" role="dialog" aria-labelledby="user-modal" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="user-modal-label">Employee</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+            <div class="row">
+                <div class="col">
+                    <button type="button" class="btn btn-light float-md-right" onclick="addBicycle()">
+                        <span class="oi oi-plus"></span>
+                    </button>
+                </div>
             </div>
-            <div class="modal-body">
-                <form>
-                    <div class="form-group">
-                        <label for="form-group-name-input">Name</label>
-                        <input type="hidden" id="form-group-id-input">
-                        <input type="text" class="form-control" id="form-group-name-input" placeholder="Name">
-                    </div>
-                    <div class="form-group">
-                        <label for="form-group-surname-input">Surname</label>
-                        <input type="text" class="form-control" id="form-group-surname-input" placeholder="Surname">
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" onclick="saveEmployee()">Save changes</button>
-            </div>
-        </div>
-    </div>
-</div>
+            <div class="row">
+                <div class="col">
+                    <table class="table table-hover">
+                        <thead>
+                        <th>Id</th>
+                        <th>Model</th>
+                        <th>Manufacturer</th>
+                        <th>Year produced</th>
+                        <th>Breakages</th>
+                        <th>Options</span></th>
+                        </thead>
+                        <tbody id="table-bicycle-body">
 
-<script type="application/javascript" src="assets/jquery-3.3.1.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-<script src="assets/bootstrap.min.js"></script>
-<script type="application/javascript" src="assets/script.js"></script>
-<script type="application/javascript" src="assets/employee-script.js"></script>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row reservations">
+        <div class="row" id="reservations">
+            <div class="col">
+                <h1>Should be reservations</h1>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="user-modal" tabindex="-1" role="dialog" aria-labelledby="user-modal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="user-modal-label">Employee</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="form-group-name-input">Name</label>
+                            <input type="hidden" id="form-group-id-input">
+                            <input type="text" class="form-control" id="form-group-name-input" placeholder="Name">
+                        </div>
+                        <div class="form-group">
+                            <label for="form-group-surname-input">Surname</label>
+                            <input type="text" class="form-control" id="form-group-surname-input" placeholder="Surname">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="saveEmployee()">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="bicycle-modal" tabindex="-1" role="dialog" aria-labelledby="bicycle-modal"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="bicycle-modal-label">Employee</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="model">Model</label>
+                            <input type="hidden" id="id">
+                            <input type="text" class="form-control" id="model" placeholder="Model">
+                        </div>
+                        <div class="form-group">
+                            <label for="manufacturer">Manufacturer</label>
+                            <input type="text" class="form-control" id="manufacturer" placeholder="Manufacturer">
+                        </div>
+                        <div class="form-group">
+                            <label for="year">Year</label>
+                            <input type="text" class="form-control" id="year" placeholder="Year produced">
+                        </div>
+                        <div class="form-group">
+                            <label for="breakages">Breakages</label>
+                            <input type="text" class="form-control" id="breakages" placeholder="Breakages">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="saveBicycle()">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="make-reservation-modal" tabindex="-1" role="dialog"
+         aria-labelledby="make-reservation-modal"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="make-reservation-modal-label">Employee reservations</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="col">
+                            <div class="row">
+                                <div class="form-group">
+                                    <label for="made-reservations">Existing reservations</label>
+                                    <div class="row justify-content-between">
+                                        <div class="col-md-10">
+                                            <select class="custom-select" id="made-reservations">
+                                            </select>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <button type="button" class="btn btn-light">Delete</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row borders">
+                                <div class="col">
+                                    <div class="row">
+                                        <div class="col">
+                                            <label>Make reservation</label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <input type="hidden" id="reservation-employee-id">
+                                                <input type="hidden" id="reservation-date-from">
+                                                <input type="hidden" id="reservation-date-to">
+                                                <label for="bicycle-reservation-period">Period:</label>
+                                                <input type="text" class="form-control" id="bicycle-reservation-period"
+                                                       placeholder="From">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="made-reservations">Available bicycles</label>
+                                        <select class="custom-select" id="available-bicycles">
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <button type="button" class="btn btn-primary float-md-right" onclick="reserve()">
+                                        Reserve
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="application/javascript" src="assets/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="assets/bootstrap.min.js"></script>
+    <script type="application/javascript" src="assets/script.js"></script>
+    <script type="application/javascript" src="assets/employee-script.js"></script>
+    <script type="application/javascript" src="assets/bicycle-script.js"></script>
+    <script type="application/javascript" src="assets/reservation-script.js"></script>
+    <script defer src="assets/fontawesome-all.js"></script>
 </body>
 </html>
 
