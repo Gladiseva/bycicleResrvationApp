@@ -109,7 +109,7 @@
 <div class="modal fade" id="user-modal" tabindex="-1" role="dialog" aria-labelledby="user-modal" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form onsubmit="saveEmployee()">
+            <form onsubmit="saveEmployee()" class="needs-validation" novalidate>
                 <div class="modal-header">
                     <h5 class="modal-title" id="user-modal-label">Employee</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -121,10 +121,18 @@
                         <label for="form-group-name-input">Name</label>
                         <input type="hidden" id="form-group-id-input">
                         <input type="text" class="form-control" id="form-group-name-input" placeholder="Name" required>
+                        <div class="invalid-feedback">
+                            Name field must not be empty
+                        </div>
+
                     </div>
                     <div class="form-group">
                         <label for="form-group-surname-input">Surname</label>
-                        <input type="text" class="form-control" id="form-group-surname-input" placeholder="Surname">
+                        <input type="text" class="form-control" id="form-group-surname-input" placeholder="Surname"
+                               required>
+                        <div class="invalid-feedback">
+                            Surname field must not be empty
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -180,20 +188,22 @@
      aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="make-reservation-modal-label">Employee reservations</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form>
+            <form >
+                <div class="modal-header">
+                    <h5 class="modal-title" id="make-reservation-modal-label">Employee reservations</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
                     <div class="col">
                         <div class="row">
                             <div class="col">
                                 <table class="table table-hover">
                                     <thead>
-                                    <th>Reservations</th>
+                                    <th>Reserved from:</th>
+                                    <th>To:</th>
+                                    <th>Bicycle</th>
                                     <th>Options</span></th>
                                     </thead>
                                     <tbody id="reservations-info-table">
@@ -234,18 +244,39 @@
                         </div>
                         <div class="row">
                             <div class="col">
-                                <button type="button" class="btn btn-primary float-md-right" onclick="reserve()">
+                                <button type="buttom" class="btn btn-primary float-md-right" disabled="disabled"
+                                        id="reserve" onclick="reserveeee()">
                                     Reserve
                                 </button>
                             </div>
                         </div>
                     </div>
-                </form>
-            </div>
+                </div>
+            </form>
         </div>
     </div>
 </div>
 </div>
+<script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function () {
+        'use strict';
+        window.addEventListener('load', function () {
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.getElementsByClassName('needs-validation');
+            // Loop over them and prevent submission
+            var validation = Array.prototype.filter.call(forms, function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
+</script>
 
 <script type="application/javascript" src="assets/jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>

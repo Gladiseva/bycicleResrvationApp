@@ -1,7 +1,14 @@
+function getReservationsByEmployeeId(employee, callback) {
+    $.get("/api/v1/reservations/employees/" + employee.id, function (reservations) {
+        callback(reservations);
+    });
+}
+
 function initializeReservationView() {
     intializeDatePicker();
-    var dateFrom = moment().format('YYYY-MM-DDT00:00:00.000') + 'Z';
-    var dateTo = moment().format('YYYY-MM-DDT23:59:59.000') + 'Z';
+    var date = moment()
+    var dateFrom = moment().format('YYYY-MM-DDT00:00:00.SSS') + 'Z';
+    var dateTo = moment().format('YYYY-MM-DDT23:mm:ss.SSS') + 'Z';
     loadReservations(dateFrom, dateTo);
 }
 

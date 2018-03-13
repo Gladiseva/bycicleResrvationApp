@@ -61,8 +61,15 @@ function loadReservationsForEmployee() {
         $.each(reservations, function (index, reservation) {
             var row = document.createElement('tr');
 
-            var reservationColumn = document.createElement('td');
-            reservationColumn.innerHTML = "" + moment(reservation.startUsageDate).format('MM.DD.YYYY HH:mm') + " " + reservation.endUsageDate;
+            var fromColumn = document.createElement('td');
+            fromColumn.innerHTML = "" + moment(reservation.startUsageDate).format('MM.DD.YYYY HH:mm');
+
+            var toColumn = document.createElement('td');
+            toColumn.innerHTML = " " + moment(reservation.endUsageDate).format('MM.DD.YYYY HH:mm');
+
+            var bicycleInfoColumn = document.createElement('td');
+            bicycleInfoColumn.innerHTML = ""+reservation.bicycle.model;
+
 
             var optionsColumn = document.createElement('td');
 
@@ -78,7 +85,7 @@ function loadReservationsForEmployee() {
             deleteButton.className = "btn btn-light custom-button";
             optionsColumn.appendChild(deleteButton);
 
-            row.append(reservationColumn, optionsColumn);
+            row.append(fromColumn, toColumn, bicycleInfoColumn, optionsColumn);
             $("#reservations-info-table").append(row);
         });
     })
@@ -120,6 +127,7 @@ function makeReservation(employee) {
     $("#reservation-employee-id").val(employee.id);
     loadReservationsForEmployee();
     $("#available-bicycles").empty();
+    $('#reserve').prop('disabled', true);
     $("#make-reservation-modal").modal('show');
     initializeDateRangePicker();
 }
@@ -159,6 +167,11 @@ function initializeDateRangePicker() {
                     optionInSelect.text = bicycle.model + " " + bicycle.manufacturer + " (" + bicycle.yearProduced + ")";
                     $('#available-bicycles').append(optionInSelect);
                 });
+                if ($('#available-bicycles').has('option').length == 0) {
+                    $('#reserve').prop('disabled', true);
+                } else {
+                    $('#reserve').prop('disabled', false);
+                }
             });
         });
 }
@@ -225,7 +238,7 @@ function createEmployee() {
     });
 }
 
-function reserve() {
+function reserveeee() {
     var reservation = {
         employeeId: $("#reservation-employee-id").val(),
         bicycleId: $("#available-bicycles").val(),
