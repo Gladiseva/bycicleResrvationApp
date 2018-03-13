@@ -76,12 +76,12 @@ function editBicycle(bicycle) {
 
 function updateBicycle(id) {
     var bicycle = {
-        id: id,
-        model: $("#model").val(),
-        manufacturer: $("#manufacturer").val(),
-        yearProduced: $("#year").val(),
-        breakages: $("#breakages").val(),
-}
+            id: id,
+            model: $("#model").val(),
+            manufacturer: $("#manufacturer").val(),
+            yearProduced: $("#year").val(),
+            breakages: $("#breakages").val(),
+        }
     ;
 
     $.ajax({

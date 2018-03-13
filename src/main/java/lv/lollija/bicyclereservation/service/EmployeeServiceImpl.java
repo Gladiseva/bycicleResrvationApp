@@ -4,11 +4,16 @@ import lv.lollija.bicyclereservation.dao.EmployeeDAO;
 import lv.lollija.bicyclereservation.domain.Employee;
 
 import javax.inject.Inject;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 import java.util.List;
 
 public class EmployeeServiceImpl implements EmployeeService {
+
     @Inject
     private EmployeeDAO employeeDAO;
+
     @Override
     public List<Employee> getAll() {
         return employeeDAO.getAll();

@@ -15,12 +15,12 @@ public class BicycleReservation {
     private Long id;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "employee_id", foreignKey = @ForeignKey(name = "reservation_employee_fk"))
     private Employee employee;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "bicycle_id", foreignKey = @ForeignKey(name = "reservation_bicycle_fk"))
     private Bicycle bicycle;
 

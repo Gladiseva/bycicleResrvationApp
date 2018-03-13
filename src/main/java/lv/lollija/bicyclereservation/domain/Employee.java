@@ -1,6 +1,10 @@
 package lv.lollija.bicyclereservation.domain;
 
+import org.hibernate.validator.constraints.Length;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Objects;
 import java.util.Set;
@@ -17,9 +21,13 @@ public class Employee implements Serializable{
     private Long id;
 
     @Column(name = "name")
+    @Length(min = 2)
+    @NotEmpty
     private String name;
 
     @Column(name = "surname")
+    @Length(min = 2)
+    @NotEmpty
     private String surname;
 
     @OneToMany(mappedBy = "employee", fetch = FetchType.LAZY)

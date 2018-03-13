@@ -1,17 +1,14 @@
 package lv.lollija.bicyclereservation.dao;
 
 import lv.lollija.bicyclereservation.domain.Bicycle;
-import lv.lollija.bicyclereservation.domain.BicycleReservation;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class BicycleDAOImpl implements BicycleDAO {
-    private final EntityManager entityManager = HibernateUtil.getEntityManagerFactory().createEntityManager();
+    private final EntityManager entityManager = HibernateUtil.getEntityManager();
 
     @Override
     public List<Bicycle> getAll() {

@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public class BicycleReservationDAOImpl implements BicycleReservationDAO {
-    private final EntityManager entityManager = HibernateUtil.getEntityManagerFactory().createEntityManager();
+    private final EntityManager entityManager = HibernateUtil.getEntityManager();
 
     @Override
     public List<BicycleReservation> getAll() {
@@ -27,7 +27,6 @@ public class BicycleReservationDAOImpl implements BicycleReservationDAO {
         query.setParameter("id", id);
         return query.getResultList();
     }
-
 
     @Override
     public BicycleReservation create(BicycleReservation bicycleReservation) {

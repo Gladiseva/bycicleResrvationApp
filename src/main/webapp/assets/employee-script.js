@@ -54,10 +54,49 @@ function loadEmployees() {
     })
 }
 
+function loadReservationsForEmployee() {
+    $("#reservations-info-table").empty();
+    var reservationEmployeeId = $("#reservation-employee-id").val();
+    $.get("/api/v1/reservations/employees/" + reservationEmployeeId, function (reservations) {
+        $.each(reservations, function (index, reservation) {
+            var row = document.createElement('tr');
+
+            var reservationColumn = document.createElement('td');
+            reservationColumn.innerHTML = "" + moment(reservation.startUsageDate).format('MM.DD.YYYY HH:mm') + " " + reservation.endUsageDate;
+
+            var optionsColumn = document.createElement('td');
+
+            var deleteButton = document.createElement('button');
+            deleteButton.addEventListener("click", function () {
+                deleteEmployeeReservation(reservation);
+            });
+
+            var deleteIcon = document.createElement('span');
+            deleteIcon.className = "oi oi-trash";
+            deleteButton.appendChild(deleteIcon);
+            deleteButton.type = "button";
+            deleteButton.className = "btn btn-light custom-button";
+            optionsColumn.appendChild(deleteButton);
+
+            row.append(reservationColumn, optionsColumn);
+            $("#reservations-info-table").append(row);
+        });
+    })
+
+}
+
+
 function deleteEmployee(employee) {
     $.ajax({url: "/api/v1/employees/" + employee.id, type: "DELETE"})
         .done(function () {
             loadEmployees();
+        })
+}
+
+function deleteEmployeeReservation(reservation) {
+    $.ajax({url: "/api/v1/reservations/" + reservation.id, type: "DELETE"})
+        .done(function () {
+            loadReservationsForEmployee();
         })
 }
 
@@ -78,18 +117,11 @@ function editEmployee(employee) {
 }
 
 function makeReservation(employee) {
-    getReservationsByEmployeeId(employee, function (reservations) {
-        $('#made-reservations').empty();
-        for (var i = 0; i < reservations.length; i++) {
-            var optionInSelect = document.createElement('option');
-            optionInSelect.value = reservations[i];
-            optionInSelect.text = "" + reservations[i].startUsageDate + " " + reservations[i].endUsageDate;
-            $('#made-reservations').append(optionInSelect);
-        }
-        $("#make-reservation-modal").modal('show');
-        $("#reservation-employee-id").val(employee.id);
-        initializeDateRangePicker();
-    });
+    $("#reservation-employee-id").val(employee.id);
+    loadReservationsForEmployee();
+    $("#available-bicycles").empty();
+    $("#make-reservation-modal").modal('show');
+    initializeDateRangePicker();
 }
 
 function initializeDateRangePicker() {
@@ -101,9 +133,9 @@ function initializeDateRangePicker() {
             timePicker: true,
             timePicker24Hour: true,
             timePickerIncrement: 30,
-            minDate: getFormattedCurrentDate()
+            minDate: getFormattedCurrentDateTime()
         },
-        function(start, end, label) {
+        function (start, end, label) {
             var dateFrom = start.format('YYYY-MM-DDTHH:mm:ss.SSS') + 'Z';
             var dateTo = end.format('YYYY-MM-DDTHH:mm:ss.SSS') + 'Z';
             var request = {
@@ -121,7 +153,7 @@ function initializeDateRangePicker() {
                 data: JSON.stringify(request)
             }).done(function (bicycles) {
                 $('#available-bicycles').empty();
-                $.each(bicycles, function(index, bicycle) {
+                $.each(bicycles, function (index, bicycle) {
                     var optionInSelect = document.createElement('option');
                     optionInSelect.value = bicycle.id;
                     optionInSelect.text = bicycle.model + " " + bicycle.manufacturer + " (" + bicycle.yearProduced + ")";
@@ -131,20 +163,20 @@ function initializeDateRangePicker() {
         });
 }
 
-function getFormattedCurrentDate() {
+function getFormattedCurrentDateTime() {
     var today = new Date();
     var dd = today.getDate();
-    var mm = today.getMonth()+1; //January is 0!
+    var mm = today.getMonth() + 1; //January is 0!
     var hh = today.getHours();
 
     var yyyy = today.getFullYear();
-    if(dd<10){
-        dd='0'+dd;
+    if (dd < 10) {
+        dd = '0' + dd;
     }
-    if(mm<10){
-        mm='0'+mm;
+    if (mm < 10) {
+        mm = '0' + mm;
     }
-    return dd+'.'+mm+'.'+yyyy+' '+hh+':00';
+    return dd + '.' + mm + '.' + yyyy + ' ' + hh + ':00';
 }
 
 function updateEmployee(id) {

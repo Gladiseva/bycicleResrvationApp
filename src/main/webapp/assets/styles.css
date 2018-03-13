@@ -17,3 +17,10 @@
  #date-selection-part{
      background: ghostwhite;
  }
+
+ #data-select {
+     padding: 10pt;
+ }
+ #data-select-button {
+     padding-left: 5pt;
+ }

@@ -7,7 +7,7 @@ import javax.persistence.Query;
 import java.util.List;
 
 public class EmployeeDAOImpl implements EmployeeDAO {
-    private final EntityManager entityManager = HibernateUtil.getEntityManagerFactory().createEntityManager();
+    private final EntityManager entityManager = HibernateUtil.getEntityManager();
     @Override
     public List<Employee> getAll() {
         return entityManager.createQuery("from Employee", Employee.class).getResultList();
