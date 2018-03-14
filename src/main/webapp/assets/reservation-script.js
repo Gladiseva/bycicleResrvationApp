@@ -5,21 +5,21 @@ function getReservationsByEmployeeId(employee, callback) {
 }
 
 function initializeReservationView() {
-    intializeDatePicker();
+    initializeReservationDateRangePicker();
     var date = moment()
     var dateFrom = moment().format('YYYY-MM-DDT00:00:00.SSS') + 'Z';
     var dateTo = moment().format('YYYY-MM-DDT23:mm:ss.SSS') + 'Z';
     loadReservations(dateFrom, dateTo);
 }
 
-function intializeDatePicker() {
+function initializeReservationDateRangePicker() {
     $('#reservations-date').daterangepicker({
         locale: {
-            format: 'MM.DD.YYYY'
+            format: 'DD.MM.YYYY'
         },
         showCustomRangeLabel: false,
         minDate: getFormattedCurrentDate()
-    }, function (start, end, label) {
+    }, function (start, end) {
         var dateFrom = start.format('YYYY-MM-DDTHH:mm:ss.SSS') + 'Z';
         var dateTo = end.format('YYYY-MM-DDTHH:mm:ss.SSS') + 'Z';
 

@@ -62,13 +62,13 @@ function loadReservationsForEmployee() {
             var row = document.createElement('tr');
 
             var fromColumn = document.createElement('td');
-            fromColumn.innerHTML = "" + moment(reservation.startUsageDate).format('MM.DD.YYYY HH:mm');
+            fromColumn.innerHTML = moment(reservation.startUsageDate).format('MM.DD.YYYY HH:mm');
 
             var toColumn = document.createElement('td');
-            toColumn.innerHTML = " " + moment(reservation.endUsageDate).format('MM.DD.YYYY HH:mm');
+            toColumn.innerHTML = moment(reservation.endUsageDate).format('MM.DD.YYYY HH:mm');
 
             var bicycleInfoColumn = document.createElement('td');
-            bicycleInfoColumn.innerHTML = ""+reservation.bicycle.model;
+            bicycleInfoColumn.innerHTML = reservation.bicycle.model;
 
 
             var optionsColumn = document.createElement('td');
@@ -129,51 +129,58 @@ function makeReservation(employee) {
     $("#available-bicycles").empty();
     $('#reserve').prop('disabled', true);
     $("#make-reservation-modal").modal('show');
-    initializeDateRangePicker();
+    initializeEmployeeDateRangePicker();
 }
 
-function initializeDateRangePicker() {
+function initializeEmployeeDateRangePicker() {
     $('#bicycle-reservation-period').daterangepicker(
         {
             locale: {
-                format: 'MM.DD.YYYY HH:mm'
+                format: 'DD.MM.YYYY HH:mm'
             },
             timePicker: true,
             timePicker24Hour: true,
             timePickerIncrement: 30,
             minDate: getFormattedCurrentDateTime()
-        },
-        function (start, end, label) {
-            var dateFrom = start.format('YYYY-MM-DDTHH:mm:ss.SSS');
-            var dateTo = end.format('YYYY-MM-DDTHH:mm:ss.SSS');
-            var request = {
-                dateFrom: dateFrom,
-                dateTo: dateTo
-            };
-            $("#reservation-date-from").val(dateFrom);
-            $("#reservation-date-to").val(dateTo);
-
-            $.ajax({
-                url: '/api/v1/bicycles/date',
-                type: 'POST',
-                contentType: "application/json; charset=utf-8",
-                dataType: 'json',
-                data: JSON.stringify(request)
-            }).done(function (bicycles) {
-                $('#available-bicycles').empty();
-                $.each(bicycles, function (index, bicycle) {
-                    var optionInSelect = document.createElement('option');
-                    optionInSelect.value = bicycle.id;
-                    optionInSelect.text = bicycle.model + " " + bicycle.manufacturer + " (" + bicycle.yearProduced + ")";
-                    $('#available-bicycles').append(optionInSelect);
-                });
-                if ($('#available-bicycles').has('option').length == 0) {
-                    $('#reserve').prop('disabled', true);
-                } else {
-                    $('#reserve').prop('disabled', false);
-                }
-            });
+        }, function (start, end) {
+            onReservationDateSelected(start, end)
         });
+}
+
+function onReservationDateSelected(start, end) {
+    var dateFrom = start.format('YYYY-MM-DDTHH:mm:ss.SSS');
+    var dateTo = end.format('YYYY-MM-DDTHH:mm:ss.SSS');
+    var request = {
+        dateFrom: dateFrom,
+        dateTo: dateTo
+    };
+    $("#reservation-date-from").val(dateFrom);
+    $("#reservation-date-to").val(dateTo);
+
+    $.ajax({
+        url: '/api/v1/bicycles/date',
+        type: 'POST',
+        contentType: "application/json; charset=utf-8",
+        dataType: 'json',
+        data: JSON.stringify(request)
+    }).done(function (bicycles) {
+        setReserveButtonStateAccordingToAvailableBicycles(bicycles);
+    });
+}
+
+function setReserveButtonStateAccordingToAvailableBicycles(bicycles) {
+    $('#available-bicycles').empty();
+    $.each(bicycles, function (index, bicycle) {
+        var optionInSelect = document.createElement('option');
+        optionInSelect.value = bicycle.id;
+        optionInSelect.text = bicycle.model + " " + bicycle.manufacturer + " (" + bicycle.yearProduced + ")";
+        $('#available-bicycles').append(optionInSelect);
+    });
+    if ($('#available-bicycles').has('option').length == 0) {
+        $('#reserve').prop('disabled', true);
+    } else {
+        $('#reserve').prop('disabled', false);
+    }
 }
 
 function getFormattedCurrentDateTime() {
