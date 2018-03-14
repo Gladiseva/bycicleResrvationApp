@@ -4,6 +4,9 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Calendar;
 import java.util.Objects;
 import java.util.Set;
 
@@ -29,8 +32,6 @@ public class Bicycle {
     private String manufacturer;
 
     @NotNull
-    @Min(2000)
-    @Max(2100)
     @Column(name = "year_produced")
     private Integer yearProduced;
 
