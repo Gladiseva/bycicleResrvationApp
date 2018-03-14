@@ -52,8 +52,21 @@ function loadBicyclesWithReservationsOnDate(bicycles) {
         bicycleColumn.innerHTML = "" + bicycle.model + " " + bicycle.manufacturer;
 
         var reservationsColumn = document.createElement('td');
-        reservationsColumn.innerHTML = "Reservations list";
 
+        var reservationsInnerTable = document.createElement(('tbody'));
+        $.each(bicycle.reservations, function (index, reservation) {
+            var rowInner = document.createElement('tr');
+
+            var reservationRangeColumn = document.createElement('td');
+            reservationRangeColumn.innerHTML = moment(reservation.startUsageDate).format('MM.DD.YYYY HH:mm') + " - " + moment(reservation.endUsageDate).format('MM.DD.YYYY HH:mm');
+            rowInner.append(reservationRangeColumn);
+            var reservationEmployeeColumn = document.createElement('td');
+            reservationEmployeeColumn.innerHTML = reservation.employee.name + " " + reservation.employee.surname;
+            rowInner.append(reservationEmployeeColumn);
+
+            reservationsInnerTable.append(rowInner);
+        });
+        reservationsColumn.append(reservationsInnerTable);
         row.append(bicycleColumn, reservationsColumn);
         $("#bicycles-with-reservations").append(row);
     });

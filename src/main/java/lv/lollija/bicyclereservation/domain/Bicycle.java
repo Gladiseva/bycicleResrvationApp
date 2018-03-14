@@ -3,8 +3,7 @@ package lv.lollija.bicyclereservation.domain;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
 import java.util.Objects;
 import java.util.Set;
 
@@ -18,21 +17,20 @@ public class Bicycle {
     @Column(name = "id")
     private Long id;
 
-    @NotNull
+
     @Length(min = 2)
     @NotEmpty
     @Column(name = "model")
     private String model;
 
-    @NotNull
     @Length(min = 2)
     @NotEmpty
     @Column(name = "manufacturer")
     private String manufacturer;
 
     @NotNull
-    @Length(min = 2)
-    @NotEmpty
+    @Min(2000)
+    @Max(2100)
     @Column(name = "year_produced")
     private Integer yearProduced;
 

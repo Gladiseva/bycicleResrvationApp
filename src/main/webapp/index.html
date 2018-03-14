@@ -36,7 +36,7 @@
         <div class="col">
             <div class="row">
                 <div class="col">
-                    <button type="button" class="btn btn-light float-md-right" onclick="addEmployee()">
+                    <button type="button" class="btn btn-light float-md-right" onclick="addEmployee()" id="employee-adder">
                         <span class="oi oi-plus"></span>
                     </button>
                 </div>
@@ -137,7 +137,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save changes</button>
+                    <button type="submit" class="btn btn-primary" id="submit-btn">Save changes</button>
                 </div>
             </form>
         </div>
@@ -148,39 +148,50 @@
      aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="bicycle-modal-label">Employee</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form>
+            <form onsubmit="saveBicycle()" id="bicycle-form" class="needs-validation" novalidate>
+                <div class="modal-header">
+                    <h5 class="modal-title" id="bicycle-modal-label">Employee</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
                     <div class="form-group">
                         <label for="model">Model</label>
                         <input type="hidden" id="id">
-                        <input type="text" class="form-control" id="model" placeholder="Model">
+                        <input type="text" class="form-control" id="model" placeholder="Model" required>
+                        <div class="invalid-feedback">
+                            Model field must not be empty
+                        </div>
                     </div>
                     <div class="form-group">
                         <label for="manufacturer">Manufacturer</label>
-                        <input type="text" class="form-control" id="manufacturer" placeholder="Manufacturer">
+                        <input type="text" class="form-control" id="manufacturer" placeholder="Manufacturer" required>
+                        <div class="invalid-feedback">
+                            Manufacturer field must not be empty
+                        </div>
                     </div>
                     <div class="form-group">
                         <label for="year">Year</label>
-                        <input type="text" class="form-control" id="year" placeholder="Year produced">
+                        <input type="text" class="form-control" id="year" placeholder="Year produced" required minlength="4" maxlength="4">
+                        <div class="invalid-feedback">
+                            Year produced field must not be empty and must be an integer
+                        </div>
                     </div>
                     <div class="form-group">
                         <label for="breakages">Breakages</label>
                         <input type="text" class="form-control" id="breakages" placeholder="Breakages">
                     </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" onclick="saveBicycle()">Save changes</button>
-            </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" >Save changes</button>
+                </div>
+            </form>
         </div>
+
     </div>
+</div>
 </div>
 
 <div class="modal fade" id="make-reservation-modal" tabindex="-1" role="dialog"
@@ -188,7 +199,7 @@
      aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-            <form >
+            <form>
                 <div class="modal-header">
                     <h5 class="modal-title" id="make-reservation-modal-label">Employee reservations</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -245,7 +256,7 @@
                         <div class="row">
                             <div class="col">
                                 <button type="buttom" class="btn btn-primary float-md-right" disabled="disabled"
-                                        id="reserve" onclick="reserveeee()">
+                                        id="reserve" onclick="reserveBicycle()">
                                     Reserve
                                 </button>
                             </div>
@@ -257,6 +268,7 @@
     </div>
 </div>
 </div>
+
 <script>
     // Example starter JavaScript for disabling form submissions if there are invalid fields
     (function () {

@@ -144,8 +144,8 @@ function initializeDateRangePicker() {
             minDate: getFormattedCurrentDateTime()
         },
         function (start, end, label) {
-            var dateFrom = start.format('YYYY-MM-DDTHH:mm:ss.SSS') + 'Z';
-            var dateTo = end.format('YYYY-MM-DDTHH:mm:ss.SSS') + 'Z';
+            var dateFrom = start.format('YYYY-MM-DDTHH:mm:ss.SSS');
+            var dateTo = end.format('YYYY-MM-DDTHH:mm:ss.SSS');
             var request = {
                 dateFrom: dateFrom,
                 dateTo: dateTo
@@ -238,7 +238,7 @@ function createEmployee() {
     });
 }
 
-function reserveeee() {
+function reserveBicycle() {
     var reservation = {
         employeeId: $("#reservation-employee-id").val(),
         bicycleId: $("#available-bicycles").val(),
