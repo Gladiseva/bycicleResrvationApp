@@ -109,7 +109,7 @@
 <div class="modal fade" id="user-modal" tabindex="-1" role="dialog" aria-labelledby="user-modal" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form onsubmit="saveEmployee()" class="needs-validation" novalidate>
+            <form onsubmit="saveEmployee()">
                 <div class="modal-header">
                     <h5 class="modal-title" id="user-modal-label">Employee</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -148,7 +148,7 @@
      aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form onsubmit="saveBicycle()" id="bicycle-form" class="needs-validation" novalidate>
+            <form onsubmit="saveBicycle()" id="bicycle-form">
                 <div class="modal-header">
                     <h5 class="modal-title" id="bicycle-modal-label">Employee</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -173,7 +173,7 @@
                     </div>
                     <div class="form-group">
                         <label for="year">Year</label>
-                        <input type="text" class="form-control" id="year" placeholder="Year produced" required minlength="4" maxlength="4">
+                        <input type="text" class="form-control" id="year" name="year" placeholder="Year produced" required minlength="4" maxlength="4">
                         <div class="invalid-feedback">
                             Year produced field must not be empty and must be an integer
                         </div>
@@ -269,32 +269,10 @@
 </div>
 </div>
 
-<script>
-    // Example starter JavaScript for disabling form submissions if there are invalid fields
-    (function () {
-        'use strict';
-        window.addEventListener('load', function () {
-            // Fetch all the forms we want to apply custom Bootstrap validation styles to
-            var forms = document.getElementsByClassName('needs-validation');
-            // Loop over them and prevent submission
-            var validation = Array.prototype.filter.call(forms, function (form) {
-                form.addEventListener('submit', function (event) {
-                    if (form.checkValidity() === false) {
-                        event.preventDefault();
-                        event.stopPropagation();
-                    }
-                    form.classList.add('was-validated');
-                }, false);
-            });
-        }, false);
-    })();
-</script>
-
 <script type="application/javascript" src="assets/jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.min.js"></script>
 <script src="assets/bootstrap.min.js"></script>
 <script type="application/javascript" src="assets/script.js"></script>
 <script type="application/javascript" src="assets/employee-script.js"></script>

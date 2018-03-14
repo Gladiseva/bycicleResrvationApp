@@ -1,15 +1,5 @@
 $(document).ready(function () {
     showEmployees();
-    $("#submit-btn").click(function (e) {
-        e.preventDefault();
-        var name = $("#form-group-name-input").val();
-        var surname = $("#form-group-surname-input").val();
-        if (name != '' && surname != '') {
-            saveEmployee()
-        } else {
-            alert("Please Fill All Fields.");
-        }
-    });
 });
 
 function showEmployees() {
