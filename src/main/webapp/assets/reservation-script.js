@@ -17,8 +17,7 @@ function initializeReservationDateRangePicker() {
         locale: {
             format: 'DD.MM.YYYY'
         },
-        showCustomRangeLabel: false,
-        minDate: getFormattedCurrentDate()
+        showCustomRangeLabel: false
     }, function (start, end) {
         var dateFrom = start.format('YYYY-MM-DDTHH:mm:ss.SSS') + 'Z';
         var dateTo = end.format('YYYY-MM-DDTHH:mm:ss.SSS') + 'Z';
@@ -70,19 +69,4 @@ function loadBicyclesWithReservationsOnDate(bicycles) {
         row.append(bicycleColumn, reservationsColumn);
         $("#bicycles-with-reservations").append(row);
     });
-}
-
-function getFormattedCurrentDate() {
-    var today = new Date();
-    var dd = today.getDate();
-    var mm = today.getMonth() + 1;
-
-    var yyyy = today.getFullYear();
-    if (dd < 10) {
-        dd = '0' + dd;
-    }
-    if (mm < 10) {
-        mm = '0' + mm;
-    }
-    return dd + '.' + mm + '.' + yyyy;
 }
